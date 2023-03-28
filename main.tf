@@ -22,7 +22,7 @@ resource "aws_vpc" "project_vpc" {
 
 resource "aws_subnet" "subnet_A" {
     vpc_id = "${aws_vpc.project_vpc.id}"
-    cidr_block = "172.31.100.0/23"
+    cidr_block = "172.31.100.0/20"
     availability_zone = "eu-west-2a"
     tags = {
         Name = "project_subnet_a"
@@ -31,7 +31,7 @@ resource "aws_subnet" "subnet_A" {
 
 resource "aws_subnet" "subnet_B" {
     vpc_id = "${aws_vpc.project_vpc.id}"
-    cidr_block = "172.31.300.0/23"
+    cidr_block = "172.31.300.0/20"
     availability_zone = "eu-west-2b"
     tags = {
         Name = "project_subnet_b"
