@@ -57,7 +57,7 @@ resource "aws_security_group" "project_sg" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = [aw.project_vpc.cidr_block]
+        cidr_blocks = [aw.project_vpc.cidr_block]  ##This will need to get changed when controller instance switches from test instance
     }
     egress {
         from_port = 0
