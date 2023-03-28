@@ -48,7 +48,27 @@ resource "aws_subnet" "subnet_C" {
 }
 
 resource "aws_security_group" "project_sg" {
-    # look up how to configure SG
+    name = "project_sg"
+    description = "Allow inbound SSH traffic"
+    vpc_id = aws_vpc.project_vpc.id
+
+    ingress {
+        description = "inbound ssh from controller"
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = [aw.project_vpc.cidr_block]
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+    }
+    tags = {
+        Name = "Allow SSH"
+    }
 }
 
 resource "aws_instance" "deployment" {
@@ -57,5 +77,14 @@ resource "aws_instance" "deployment" {
     subnet_id = "${aws_subnet.subnet_B.id}"
     tags = {
         Name = "Deployment Instance"
+    }
+}
+
+resource "aws_instance" "pipeline" {
+    ami = "ami-0aaa5410833273cfe"
+    instance_type = "t2.micro"
+    subnet_id = "${aws_subnet.subnet_A.id}"
+    tags = {
+        Name = "Pipeline Instance"
     }
 }
