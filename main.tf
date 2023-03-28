@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 resource "aws_vpc" "project_vpc" {
-    cidr_block = "172.128.0.0/16"
+    cidr_block = "172.31.0.0/16"
     tags = {
         Name = "project_vpc"
     }
@@ -22,7 +22,7 @@ resource "aws_vpc" "project_vpc" {
 
 resource "aws_subnet" "subnet_A" {
     vpc_id = "${aws_vpc.project_vpc.id}"
-    cidr_block = "172.128.100.0/23"
+    cidr_block = "172.31.100.0/23"
     availability_zone = "eu-west-2a"
     tags = {
         Name = "project_subnet_a"
@@ -31,7 +31,7 @@ resource "aws_subnet" "subnet_A" {
 
 resource "aws_subnet" "subnet_B" {
     vpc_id = "${aws_vpc.project_vpc.id}"
-    cidr_block = "172.128.300.0/23"
+    cidr_block = "172.31.300.0/23"
     availability_zone = "eu-west-2b"
     tags = {
         Name = "project_subnet_b"
@@ -40,7 +40,7 @@ resource "aws_subnet" "subnet_B" {
 
 resource "aws_subnet" "subnet_C" {
     vpc_id = "${aws_vpc.project_vpc.id}"
-    cidr_block = "172.128.500.0/23"
+    cidr_block = "172.31.500.0/23"
     availability_zone = "eu-west-2c"
     tags = {
         Name = "project_subnet_c"
