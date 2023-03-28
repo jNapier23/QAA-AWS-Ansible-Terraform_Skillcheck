@@ -1,7 +1,9 @@
-required_providers {
-    aws = {
-        source = "hashicorp/aws"
-        version = "latest"
+terraform {
+    required_providers {
+        aws = {
+            source = "hashicorp/aws"
+            version = "latest"
+        }
     }
 }
 
