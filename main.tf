@@ -111,7 +111,7 @@ resource "aws_security_group" "project_sg" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = ["${aws_vpc.project_vpc.cidr_block}"]  ##This will need to get changed when controller instance switches from test instance
+        cidr_blocks = ["172.31.0.0/16"]  ##This will need to get changed when controller instance switches from test instance
     }
 
     ingress {
