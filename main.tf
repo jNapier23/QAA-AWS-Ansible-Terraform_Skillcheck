@@ -12,6 +12,22 @@ provider "aws" {
     access_key = var.access_key
     secret_key = var.secret_key
 }
+//Start of SSH key generation to allow connection to CICD and deployment instances from controller
+resource "tls_private_key" "private_key" {
+    algorithm = "RSA"
+    rsa_bits = 4096
+}
+
+resource "aws_key_pair" "ssh_key" { 
+    key_name = "deployment_key"
+    public_key = tls_private_key.private_key.public_key_openssh
+
+    provisioner "local-exec" {
+        command = "echo '${tls_private_key.private_key.private_key_pem}' > ./sshKey.pem"
+      
+    }
+}
+//End of keygen 
 
 resource "aws_vpc" "project_vpc" {
     cidr_block = "172.31.0.0/16"
