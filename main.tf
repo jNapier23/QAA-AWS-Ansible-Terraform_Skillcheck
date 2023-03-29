@@ -19,7 +19,7 @@ resource "tls_private_key" "private_key" {
 }
 
 resource "aws_key_pair" "ssh_key" { 
-    key_name = "deployment_key"
+    key_name = var.ssh_key_name
     public_key = tls_private_key.private_key.public_key_openssh
 
     provisioner "local-exec" {
@@ -145,6 +145,7 @@ resource "aws_security_group" "project_sg" {
 resource "aws_instance" "deployment" {
     ami = "ami-0aaa5410833273cfe"
     instance_type = "t2.micro"
+    key_name = var.ssh_key_name
     subnet_id = "${aws_subnet.subnet_B.id}"
     vpc_security_group_ids = ["${aws_security_group.project_sg.id}"]
     tags = {
@@ -155,6 +156,7 @@ resource "aws_instance" "deployment" {
 resource "aws_instance" "pipeline" {
     ami = "ami-0aaa5410833273cfe"
     instance_type = "t2.micro"
+    key_name = var.ssh_key_name
     subnet_id = "${aws_subnet.subnet_A.id}"
     vpc_security_group_ids = ["${aws_security_group.project_sg.id}"]
     tags = {
