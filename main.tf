@@ -165,12 +165,7 @@ resource "aws_instance" "pipeline" {
         type = "ssh"
         user = "ubuntu"
         host = self.public_ip
-    }
-
-    //SSH into pipeline instance to install jenkins
-    provisioner "local-exec" {
-      command = "ssh -i ${var.ssh_key_name}.pem ubuntu.${self.public_ip}"
-      
+        private_key = aws_key_pair.ssh_key
     }
 
     //Installs Jenkins on remote host
