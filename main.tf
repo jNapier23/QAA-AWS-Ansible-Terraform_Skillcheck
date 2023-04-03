@@ -169,7 +169,7 @@ resource "aws_instance" "pipeline" {
 
     //SSH into pipeline instance to install jenkins
     provisioner "local-exec" {
-      inline = ["ssh -i ${var.ssh_key_name}.pem ubuntu.${self.public_ip}"]
+      command = ["ssh -i ${var.ssh_key_name}.pem ubuntu.${self.public_ip}"]
       
     }
 
