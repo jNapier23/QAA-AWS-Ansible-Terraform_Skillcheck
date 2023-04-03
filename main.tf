@@ -165,7 +165,7 @@ resource "aws_instance" "pipeline" {
         type = "ssh"
         user = "ubuntu"
         host = self.public_ip
-        private_key = aws_key_pair.ssh_key
+        private_key = tls_private_key.private_key
     }
 
     //Installs Jenkins on remote host
