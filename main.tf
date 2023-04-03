@@ -171,13 +171,12 @@ resource "aws_instance" "pipeline" {
     //Installs Jenkins on remote host
     provisioner "remote-exec" {
     inline = [
-        "sudo yum install -y jenkins java-11-openjdk-deve1",
-        "sudo yum -y install wget", 
-        "sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins-repo",
-        "sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key",
-        "sudo yum upgrade -y",
-        "sudo yum install jenkins -y",
-        "sudo systemct1 start jenkins"
+        "sudo apt update",
+        "sudo apt install openjdk-11-jdk -y",
+        "curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null",
+        "echo deb [signed-by=usr/share/keyrings/jenkins/-keyrings-asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null",
+        "sudo apt update",
+        "sudo apt install jenkins -y"
     ]
 
 }
