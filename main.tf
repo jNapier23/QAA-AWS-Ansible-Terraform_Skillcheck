@@ -168,13 +168,14 @@ resource "aws_instance" "pipeline" {
         private_key = tls_private_key.private_key.private_key_pem
     }
 
-    //Installs Jenkins on remote host
     provisioner "remote-exec" {
     inline = [
+        //installs java
         "sudo apt update",
         "sudo apt install openjdk-11-jdk -y",
-        "sudo curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null",
-        "sudo echo deb [signed-by=/usr/share/keyrings/jenkins/-keyrings.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null",
+        //installs jenkins
+        "curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null",
+        "echo deb [signed-by=/usr/share/keyrings/jenkins-keyrings.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null",
         "sudo apt update",
         "sudo apt install jenkins -y"
     ]
