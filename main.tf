@@ -153,13 +153,37 @@ resource "aws_instance" "deployment" {
     }
 }
 
+//Creates new instance for Jenkins and Docker
 resource "aws_instance" "pipeline" {
     ami = "ami-0aaa5410833273cfe"
     instance_type = "t2.micro"
     key_name = var.ssh_key_name
     subnet_id = "${aws_subnet.subnet_A.id}"
     vpc_security_group_ids = ["${aws_security_group.project_sg.id}"]
+    
+    connection {
+        type = "ssh"
+        user = "ubuntu"
+        host = self.public_ip
+    }
+
+    //Installs Jenkins on remote host
+    provisioner "remote-exec" {
+    inline = [
+        "sudo yum install -y jenkins java-11-openjdk-deve1",
+        "sudo yum -y install wget", 
+        "sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins-repo",
+        "sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key",
+        "sudo yum upgrade -y",
+        "sudo yum install jenkins -y",
+        "sudo systemct1 start jenkins"
+    ]
+
+}
+    
     tags = {
         Name = "Pipeline Instance"
     }
+
 }
+
