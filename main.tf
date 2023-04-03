@@ -181,7 +181,7 @@ resource "aws_instance" "pipeline" {
     #     "sudo apt-get install jenkins"
     # ]
 
-}
+    #}
     
     tags = {
         Name = "Pipeline Instance"
