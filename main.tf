@@ -195,7 +195,7 @@ resource "aws_instance" "pipeline" {
     }
 
     //An attempt to create a copy of the generated SSH Key file within the Pipeline instance
-    provisioner "file" "sshKey" {
+    provisioner "file" {
         filename = "sshKey.pem"
         content = "${tls_private_key.private_key.private_key_pem}"
       
