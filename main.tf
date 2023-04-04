@@ -137,6 +137,14 @@ resource "aws_security_group" "project_sg" {
         cidr_blocks         = ["${aws_subnet.subnet_A.cidr_block}"] 
     }
     
+    ingress {
+        description         = "http inbound from anywhere to access hosted content"
+        from_port           = 80
+        to_port             = 80
+        protocol            = "tcp"
+        cidr_blocks         = "0.0.0.0/0"
+    }
+    
     egress {
         from_port           = 0
         to_port             = 0
@@ -186,6 +194,12 @@ resource "aws_instance" "pipeline" {
         private_key         = tls_private_key.private_key.private_key_pem
     }
 
+    //An attempt to create a copy of the generated SSH Key file within the Pipeline instance
+    provisioner "local-exec" {
+        command = "echo '${tls_private_key.private_key.private_key_pem}' > ./'${var.ssh_key_name}'.pem"
+      
+    }
+
     provisioner "remote-exec" {
     inline = [
         //installs java
@@ -217,7 +231,10 @@ resource "local_file" "inventory" {
     [Deployment]
     ${aws_instance.deployment1.public_ip}
     ${aws_instance.deployment2.public_ip}
-    [vars]
+    [CICD:vars]
+    ansible_ssh_user=ec2-user
+    ansible_ssh_private_key_file=sshKey.pem
+    [Deployment:vars]
     ansible_ssh_user=ec2-user
     ansible_ssh_private_key_file=sshKey.pem
     EOF   
