@@ -30,7 +30,7 @@ resource "aws_key_pair" "ssh_key" {
 
     //Deletes generated sshKey file on Terraform Destroy
     provisioner "local-exec" {
-        command             = "rm -f /sshKey.pem"
+        command             = "rm -f sshKey.pem"
         when                = destroy
     }
 }
