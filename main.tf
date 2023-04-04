@@ -149,14 +149,25 @@ resource "aws_security_group" "project_sg" {
     }
 }
 
-resource "aws_instance" "deployment" {
+resource "aws_instance" "deployment1" {
     ami                     = "ami-061fbd84f343c52d5"
     instance_type           = "t2.micro"
     key_name                = var.ssh_key_name
     subnet_id               = "${aws_subnet.subnet_B.id}"
     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
     tags = {
-        Name                = "Deployment Instance"
+        Name                = "Deployment Instance 1"
+    }
+}
+
+resource "aws_instance" "deployment2" {
+    ami                     = "ami-061fbd84f343c52d5"
+    instance_type           = "t2.micro"
+    key_name                = var.ssh_key_name
+    subnet_id               = "${aws_subnet.subnet_B.id}"
+    vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
+    tags = {
+        Name                = "Deployment Instance 2"
     }
 }
 
@@ -196,3 +207,18 @@ resource "aws_instance" "pipeline" {
 
 }
 
+
+//Generates inventory file for Ansible to use
+resource "local_file" "inventory" {
+    filename = "inventory.ini"
+    content = <<EOF
+    [CICD]
+    ${aws_instance.pipeline.public_ip}
+    [Deployment]
+    ${aws_instance.deployment1.public_ip}
+    ${aws_instance.deployment2.public_ip}
+    [vars]
+    ansible_ssh_user=ec2-user
+    ansible_ssh_private_key_file=sshKey.pem
+    EOF   
+}
