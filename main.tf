@@ -143,7 +143,7 @@ resource "aws_security_group" "project_sg" {
 }
 
 resource "aws_instance" "deployment" {
-    ami = "ami-0aaa5410833273cfe"
+    ami = "ami-0ad97c80f2dfe623b"
     instance_type = "t2.micro"
     key_name = var.ssh_key_name
     subnet_id = "${aws_subnet.subnet_B.id}"
@@ -155,7 +155,7 @@ resource "aws_instance" "deployment" {
 
 //Creates new instance for Jenkins and Docker
 resource "aws_instance" "pipeline" {
-    ami = "ami-0aaa5410833273cfe"
+    ami = "ami-0ad97c80f2dfe623b"
     instance_type = "t2.micro"
     key_name = var.ssh_key_name
     subnet_id = "${aws_subnet.subnet_A.id}"
