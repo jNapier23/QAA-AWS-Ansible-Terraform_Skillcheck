@@ -170,7 +170,7 @@ resource "aws_instance" "pipeline" {
     
     connection {
         type                = "ssh"
-        user                = "ubuntu"
+        user                = "ec2-user"
         host                = self.public_ip
         private_key         = tls_private_key.private_key.private_key_pem
     }
