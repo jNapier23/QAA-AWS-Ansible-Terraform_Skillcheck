@@ -19,9 +19,9 @@ variable "instance_type" {
 }
 
 variable "subnet_id" {
-    default = "${aws_subnet.subnet_B.id}"
+    type = string
 }
 
 variable     "vpc_security_group_ids"{
-    default = ["${aws_security_group.project_sg.id}"]
+    type = string
 }  
