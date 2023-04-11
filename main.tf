@@ -157,51 +157,28 @@ resource "aws_security_group" "project_sg" {
     }
 }
 
-module "deployment1" {
-    source = "./modules"
-    
-    ami_id                  = var.ami_id
-    instance_type           = var.instance_type
-    ssh_key_name            = var.ssh_key_name
+
+resource "aws_instance" "deployment1" {
+    ami                     = "ami-061fbd84f343c52d5"
+    instance_type           = "t2.micro"
+    key_name                = var.ssh_key_name
     subnet_id               = "${aws_subnet.subnet_B.id}"
     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
-    deployment_name         = var.deployment_name
-
+    tags = {
+        Name                = "Deployment Instance 1"
+    }
 }
 
-module "deployment2" {
-    source = "./modules"
-    
-    ami_id                  = var.ami_id
-    instance_type           = var.instance_type
-    ssh_key_name            = var.ssh_key_name
+resource "aws_instance" "deployment2" {
+    ami                     = "ami-061fbd84f343c52d5"
+    instance_type           = "t2.micro"
+    key_name                = var.ssh_key_name
     subnet_id               = "${aws_subnet.subnet_B.id}"
     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
-    deployment_name         = var.deployment_name
-
+    tags = {
+        Name                = "Deployment Instance 2"
+    }
 }
-
-# resource "aws_instance" "deployment1" {
-#     ami                     = "ami-061fbd84f343c52d5"
-#     instance_type           = "t2.micro"
-#     key_name                = var.ssh_key_name
-#     subnet_id               = "${aws_subnet.subnet_B.id}"
-#     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
-#     tags = {
-#         Name                = "Deployment Instance 1"
-#     }
-# }
-
-# resource "aws_instance" "deployment2" {
-#     ami                     = "ami-061fbd84f343c52d5"
-#     instance_type           = "t2.micro"
-#     key_name                = var.ssh_key_name
-#     subnet_id               = "${aws_subnet.subnet_B.id}"
-#     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
-#     tags = {
-#         Name                = "Deployment Instance 2"
-#     }
-# }
 
 //Creates new instance for Jenkins and Docker
 resource "aws_instance" "pipeline" {
