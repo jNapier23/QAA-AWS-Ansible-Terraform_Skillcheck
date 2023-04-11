@@ -11,11 +11,11 @@ variable "ssh_key_name" {
 }
 
 variable "subnet_id" {
-    type = string
+    type = number
 }
 
 variable     "vpc_security_group_ids"{
-    type = string
+    type = number
 }  
 
 variable "deployment_name" {
