@@ -26,4 +26,5 @@
       shell: npm install -g express-generator && express && npm install && npm start
       shell: sudo yum install git
       shell: git clone https://gitlab.com/Reece-Elder/devops-m5-nodeproject/
+      shell: cd devops-m5-nodeproject
       shell: node index.js #This may cause the terminal to stick, if so will need to have user enter this manually and create new terminal to curl localhost:5000
