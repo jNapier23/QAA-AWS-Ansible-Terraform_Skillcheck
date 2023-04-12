@@ -24,4 +24,6 @@
     - name: Install nodejs and npm
       shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash . ~/.nvm/nvm.sh | nvm install 16 #latest version not supported by AWS
       shell: npm install -g express-generator && express && npm install && npm start
+      shell: sudo yum install git
+      shell: git clone https://gitlab.com/Reece-Elder/devops-m5-nodeproject/
       shell: node index.js #This may cause the terminal to stick, if so will need to have user enter this manually and create new terminal to curl localhost:5000
