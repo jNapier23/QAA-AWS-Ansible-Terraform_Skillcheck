@@ -1,3 +1,7 @@
+
+##NOT REQUIRED FOR PROJECT -- MISREAD BRIEF
+
+
 #Specifies image
 FROM ubuntu:latest
 #Clones repo containing application to run

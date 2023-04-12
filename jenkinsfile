@@ -1,5 +1,7 @@
 #!groovy
 
+//NOT REQUIRED FOR PROJECT -- MISREAD BRIEF
+
 
 //Pulls IP address of deployment instance 1
 def ip = readFile(file: deployment1_ip.txt)
