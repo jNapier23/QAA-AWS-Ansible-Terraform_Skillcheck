@@ -1,8 +1,8 @@
 #!groovy
 
-//Pulls IP address of deployment instance 1 
-def ip = deployment1_ip.txt.readLines()
 
+//Pulls IP address of deployment instance 1
+def ip = readFile(file: deployment1_ip.txt)
 
 pipeline {
     agent { dockerfile true }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 
                 //Deploys dockerfile to create container on remote instance, referencing IP pulled eariler
-                sh 'docker -H ssh://ec2-user@ run -it --rm busybox'
+                sh 'docker -H ssh://ec2-user@${ip} run -it --rm busybox'
                 sh 'docker build -t jwnapier23/ubuntu:latest'
 
             }

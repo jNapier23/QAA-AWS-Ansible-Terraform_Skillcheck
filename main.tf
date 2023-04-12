@@ -147,6 +147,14 @@ resource "aws_security_group" "project_sg" {
         protocol            = "tcp"
         cidr_blocks         = ["0.0.0.0/0"]
     }
+
+    ingress {
+        description         = "https inbound from anywhere to access hosted content"
+        from_port           = 443
+        to_port             = 443
+        protocol            = "tcp"
+        cidr_blocks         = ["0.0.0.0/0"]
+    }
     
     egress {
         from_port           = 0
@@ -156,7 +164,7 @@ resource "aws_security_group" "project_sg" {
         ipv6_cidr_blocks    = ["::/0"]
     }
     tags = {
-        Name                = "Allow SSH, mySQL, and Jenkins"
+        Name                = "Allow HTTP, HTTPS, SSH, mySQL, and Jenkins"
     }
 }
 
