@@ -36,6 +36,8 @@ resource "aws_key_pair" "ssh_key" {
 }
 //End of keygen 
 
+
+//Creates VPC, 3 subnets, route gateway and route tables
 resource "aws_vpc" "project_vpc" {
     cidr_block              = "172.31.0.0/16"
     tags = {
@@ -108,6 +110,7 @@ resource "aws_route_table_association" "project_public_subnet_C" {
     route_table_id          = "${aws_route_table.project_public_route.id}"
 }
 
+//Creates Security Group used by all instances
 resource "aws_security_group" "project_sg" {
     name                    = "project_sg"
     description             = "Allow inbound traffic"
@@ -118,7 +121,7 @@ resource "aws_security_group" "project_sg" {
         from_port           = 22
         to_port             = 22
         protocol            = "tcp"
-        cidr_blocks         = ["0.0.0.0/0"]  ##This will need to get changed when controller instance switches from test instance
+        cidr_blocks         = ["0.0.0.0/0"]
     }
 
     ingress {
@@ -157,7 +160,7 @@ resource "aws_security_group" "project_sg" {
     }
 }
 
-
+//Creates both deployment instances
 resource "aws_instance" "deployment1" {
     ami                     = "ami-061fbd84f343c52d5"
     instance_type           = "t2.micro"
@@ -179,6 +182,7 @@ resource "aws_instance" "deployment2" {
         Name                = "Deployment Instance 2"
     }
 }
+//
 
 //Creates new instance for Jenkins and Docker
 resource "aws_instance" "pipeline" {
@@ -188,6 +192,7 @@ resource "aws_instance" "pipeline" {
     subnet_id               = "${aws_subnet.subnet_A.id}"
     vpc_security_group_ids  = ["${aws_security_group.project_sg.id}"]
     
+    //Allows terraform to ssh from controller to pipeline to run commands and create files remotely
     connection {
         type                = "ssh"
         user                = "ec2-user"
@@ -195,13 +200,26 @@ resource "aws_instance" "pipeline" {
         private_key         = tls_private_key.private_key.private_key_pem
     }
 
-    //An attempt to create a copy of the generated SSH Key file within the Pipeline instance
+    //Creates a copy of the generated SSH Key file within the Pipeline instance in order to SSH onto Deployment instances
     provisioner "file" {
         content             = "${tls_private_key.private_key.private_key_pem}"
         destination         = "./sshKey.pem"
       
     }
 
+    //Creates files containing public ip for each of the deployment instances, for ease of use
+    provisioner "file" {
+        content             = "${aws_instance.deployment1.public_ip}"
+        destination         = "./deployment1_ip.txt"
+    }
+
+    provisioner "file" {
+        content             = "${aws_instance.deployment2.public_ip}"
+        destination         = "./deployment2_ip.txt"
+    }
+    //
+
+    //Runs commands to install packages on pipeline
     provisioner "remote-exec" {
     inline = [
         //installs java
