@@ -17,3 +17,9 @@
         name: "docker"
         state: "started"
         enabled: "yes"
+
+- hosts: Deployment
+  become: yes
+  tasks:
+    - name: Install nodejs and npm
+      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash . ~/.nvm/nvm.sh | nvm install node
