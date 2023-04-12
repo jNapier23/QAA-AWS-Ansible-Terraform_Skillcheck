@@ -1,7 +1,7 @@
 #!groovy
 
 //Pulls IP address of deployment instance 1 
-def ip = deployment1.txt.readLines()
+def ip = deployment1_ip.txt.readLines()
 
 
 pipeline {
@@ -11,14 +11,15 @@ pipeline {
             steps {
                 //Few commands to show directory, jenkins and docker versions
                 sh 'pwd'
-                sh 'jenkins -v'
-                sh 'docker -v'
+                sh 'jenkins --version'
+                sh 'docker --version'
             }
         }
         stage('Deploy') {
             steps {
+                
                 //Deploys dockerfile to create container on remote instance, referencing IP pulled eariler
-                sh 'docker -H ssh://ec2-user@'${ip[0]}' run -it --rm busybox'
+                sh 'docker -H ssh://ec2-user@ run -it --rm busybox'
                 sh 'docker build -t jwnapier23/ubuntu:latest'
 
             }
