@@ -15,7 +15,7 @@
         mode: 0755
     
     - name: Install nodejs/npm
-      shell: sh /home/ec2-user/
+      shell: sh /home/ec2-user/install.sh
       shell: . ~/.nvm/nvm.sh
       shell: nvm install 16 #latest version not supported by AWS
 
