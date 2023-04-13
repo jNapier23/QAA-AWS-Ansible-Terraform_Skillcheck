@@ -15,4 +15,4 @@
     - name: Copy bash file to Deployment instance
       ansible.builtin.copy:
         src: install-app.sh
-        dest: ~/
+        dest: /home/ec2-user
