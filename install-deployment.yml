@@ -9,7 +9,9 @@
   tasks:
     #Installs packages to support express app
     - name: Install nodejs and npm
-      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash && . ~/.nvm/nvm.sh && nvm install 16 #latest version not supported by AWS
+      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash 
+      shell: . ~/.nvm/nvm.sh
+      shell: nvm install 16 #latest version not supported by AWS
 
     #Copies bash file over to deployment instance to automate express install, repo clone, and app launch
     - name: Copy bash file to Deployment instance
