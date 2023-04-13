@@ -16,3 +16,4 @@
       ansible.builtin.copy:
         src: install-app.sh
         dest: /home/ec2-user
+        remote_src: no
