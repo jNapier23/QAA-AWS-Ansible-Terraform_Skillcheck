@@ -9,7 +9,11 @@
   tasks:
     #Installs packages to support express app
     - name: Install nodejs and npm
-      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash 
+      get_url: 
+        url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh
+        dest: /home/ec2-user/
+        mode: 0755
+      shell: sh /home/ec2-user/
       shell: . ~/.nvm/nvm.sh
       shell: nvm install 16 #latest version not supported by AWS
 
