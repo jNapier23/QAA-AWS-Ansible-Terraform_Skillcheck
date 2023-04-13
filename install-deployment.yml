@@ -7,18 +7,6 @@
 - hosts: Deployment
   become: yes
   tasks:
-    #Installs packages to support express app
-    - name: Download nodejs/npm
-      get_url: 
-        url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh
-        dest: /home/ec2-user/
-        mode: 0755
-    
-    - name: Install nodejs/npm
-      shell: sh /home/ec2-user/install.sh
-      shell: . ~/.nvm/nvm.sh
-      shell: nvm install 16 #latest version not supported by AWS
-
     #Copies bash file over to deployment instance to automate express install, repo clone, and app launch
     - name: Copy bash file to Deployment instance
       ansible.builtin.copy:
