@@ -6,14 +6,14 @@ echo Proceeding will destroy all instances and networks created by Terraform, an
 echo Do you wish to continue? y / n
 read answer
 
-if [[ "$answer" == "y" ]]
+if [ "$answer" == "y" ]
 then
     terraform destroy
 
     echo Did terraform destroy complete successfully? y / n
     read answer2
 
-    if [[ "$answer2" == "y" ]]
+    if [ "$answer2" == "y" ]
     then
         sudo shutdown -h now
     else
