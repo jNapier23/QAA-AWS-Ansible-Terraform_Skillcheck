@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Script to destroy terraform creations and shutdown Controller instance
 
 echo Proceeding will destroy all instances and networks created by Terraform, and will stop the current instance.
