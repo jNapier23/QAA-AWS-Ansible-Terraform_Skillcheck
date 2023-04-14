@@ -28,7 +28,7 @@ resource "aws_key_pair" "ssh_key" {
       
     }
 
-    //Deletes generated sshKey file on Terraform Destroy
+    //Deletes generated sshKey file on Terraform Destroy. This prevents issues when destroying and applying terraform plan in quick succession
     provisioner "local-exec" {
         command             = "rm -f sshKey.pem"
         when                = destroy
@@ -109,6 +109,7 @@ resource "aws_route_table_association" "project_public_subnet_C" {
     subnet_id               = "${aws_subnet.subnet_C.id}"
     route_table_id          = "${aws_route_table.project_public_route.id}"
 }
+//
 
 //Creates Security Group used by all instances
 resource "aws_security_group" "project_sg" {
@@ -175,6 +176,7 @@ resource "aws_security_group" "project_sg" {
         Name                = "Allow HTTP, HTTPS, SSH, mySQL, and Jenkins"
     }
 }
+//
 
 //Creates both deployment instances
 resource "aws_instance" "deployment1" {
@@ -200,7 +202,7 @@ resource "aws_instance" "deployment2" {
 }
 //
 
-//Creates new instance for Jenkins and Docker
+//Creates pipeline instance for Jenkins and Docker
 resource "aws_instance" "pipeline" {
     ami                     = "ami-061fbd84f343c52d5"
     instance_type           = "t2.micro"
@@ -223,7 +225,7 @@ resource "aws_instance" "pipeline" {
       
     }
 
-    //Creates files containing public ip for each of the deployment instances, for ease of use
+    //Creates files in Pipeline instance containing public ip for each of the deployment instances, for ease of use deploying or ssh-ing to other instances
     provisioner "file" {
         content             = "${aws_instance.deployment1.public_ip}"
         destination         = "./deployment1_ip.txt"

@@ -7,7 +7,7 @@
 - hosts: Deployment
   become: yes
   tasks:
-    #Copies bash file over to deployment instance to automate express install, repo clone, and app launch
+    #Copies bash file over to deployment instance to automate node and express install, repo clone, and app launch
     - name: Copy bash file to Deployment instance
       ansible.builtin.copy:
         src: install-app.sh

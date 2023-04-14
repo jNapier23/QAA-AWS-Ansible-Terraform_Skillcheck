@@ -9,8 +9,9 @@ Controller EC2 with Terraform and Ansible installed, able to ssh to VPC - This w
 
 
 INSTRUCTIONS FOR USE:
-- Open your terminal, cd into the directory holding the .pem file provided, and enter the following command to access the Controller instance: "ssh -i QAA-AWS-Ansible-Terraform_Skillcheck.pem ubuntu@18.130.236.98"
-- Clone the project repo with: "git clone https://github.com/jNapier23/QAA-AWS-Ansible-Terraform_Skillcheck "
+- Open your terminal, cd into the directory holding the .pem file provided, and enter the following command to access the Controller instance: "ssh -i QAA-AWS-Ansible-Terraform_Skillcheck.pem ubuntu@18.169.194.55"
+- Approve connection request by entering: "yes"
+- Clone the project repo with: "git clone https://github.com/jNapier23/QAA-AWS-Ansible-Terraform_Skillcheck"
 - Change into the cloned directory: "cd QAA-AWS-Ansible-Terraform_Skillcheck"
 - Run create-infra file: "sh create-infra.sh" (the whole process will take several minutes)
 - When prompted, enter the provided IAM credentials. They will need to be provided twice, once for the Terraform plan stage and once for the Terraform Apply stage
@@ -21,5 +22,5 @@ INSTRUCTIONS FOR USE:
 - The terminal will be unusable whilst the express app is running, however you can check to see the result by visiting the following address in your preferred web browser: http://<ip address>:5000 
 - Once finished, control+c to quit the express app, and use the "exit" command to return to the Controller instance
 - Use "cat inventory.ini" to get the list of IP addresses again if you wish to connect to another instance
-- When finished, run the exit script with: "sh quit-project.sh" [WARNING: Once this script completes successfully, the created instances will be destroyed and the controller instance will be shut down to preserve AWS resources]
+- When finished, run the exit script with: "sh quit-project.sh". Follow instructions and enter IAM credentials as requested [WARNING: Once this script completes successfully, the created instances will be destroyed and the controller instance will be shut down to preserve AWS resources]
 
